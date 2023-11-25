@@ -19,9 +19,6 @@ public partial class MyFinancesContext : DbContext
 
     public virtual DbSet<Operation> Operations { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SIGMANEST;Database=MyFinances;User Id=DOTNET2;Password=Shark1445NE;TrustServerCertificate=True;Integrated Security=SSPI;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
