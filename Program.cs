@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using MyFinances.Models;
 using MyFinances.Models.Domains;
 
 namespace MyFinances
@@ -9,6 +10,8 @@ namespace MyFinances
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddScoped<UnitOfWork, UnitOfWork>();
 
             // Add services to the container.
 
