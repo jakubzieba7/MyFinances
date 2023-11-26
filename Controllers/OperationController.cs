@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyFinances.Models;
+using MyFinances.Models.Converters;
 using MyFinances.Models.Domains;
+using MyFinances.Models.Dtos;
 using MyFinances.Models.Response;
 
 namespace MyFinances.Controllers
@@ -18,13 +20,13 @@ namespace MyFinances.Controllers
         }
 
         [HttpGet]
-        public DataResponse<IEnumerable<Operation>> Get()
+        public DataResponse<IEnumerable<OperationDto>> Get()
         {
-            var response = new DataResponse<IEnumerable<Operation>>();
+            var response = new DataResponse<IEnumerable<OperationDto>>();
 
             try
             {
-                response.Data = _unitOfWork.Operation.Get();
+                response.Data = _unitOfWork.Operation.Get().ToDtos();
             }
             catch (Exception exception)
             {
@@ -36,13 +38,13 @@ namespace MyFinances.Controllers
         }
 
         [HttpGet("{id}")]
-        public DataResponse<Operation> Get(int id)
+        public DataResponse<OperationDto> Get(int id)
         {
-            var response = new DataResponse<Operation>();
+            var response = new DataResponse<OperationDto>();
 
             try
             {
-                response.Data = _unitOfWork.Operation.Get(id);
+                response.Data = _unitOfWork.Operation.Get(id).ToDto();
             }
             catch (Exception exception)
             {
@@ -54,13 +56,13 @@ namespace MyFinances.Controllers
         }
 
         [HttpPost]
-        public DataResponse<int> Add(Operation operation)
+        public DataResponse<int> Add(OperationDto operation)
         {
             var response = new DataResponse<int>();
 
             try
             {
-                _unitOfWork.Operation.Add(operation);
+                _unitOfWork.Operation.Add(operation.ToDao());
                 _unitOfWork.Complete();
                 response.Data = operation.Id;
             }
@@ -74,13 +76,13 @@ namespace MyFinances.Controllers
         }
 
         [HttpPut]
-        public Response Update(Operation operation)
+        public Response Update(OperationDto operation)
         {
             var response = new Response();
 
             try
             {
-                _unitOfWork.Operation.Update(operation);
+                _unitOfWork.Operation.Update(operation.ToDao());
                 _unitOfWork.Complete();
             }
             catch (Exception exception)
