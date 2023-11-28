@@ -16,6 +16,5 @@ namespace MyFinances.Models.Dtos
 
         public int CategoryId { get; set; }
 
-        public virtual Category Category { get; set; } = null!;
     }
 }
