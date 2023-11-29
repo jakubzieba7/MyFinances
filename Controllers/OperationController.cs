@@ -19,6 +19,10 @@ namespace MyFinances.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Get all operations
+        /// </summary>
+        /// <returns>DataResponse - IEnumerable OperationDto</returns>
         [HttpGet]
         public DataResponse<IEnumerable<OperationDto>> Get()
         {
@@ -37,6 +41,12 @@ namespace MyFinances.Controllers
             return response;
         }
 
+
+        /// <summary>
+        /// Get operation by Id
+        /// </summary>
+        /// <param name="id">Operation Id</param>
+        /// <returns>DataResponse - OperationDto</returns>
         [HttpGet("{id}")]
         public DataResponse<OperationDto> Get(int id)
         {
@@ -55,6 +65,12 @@ namespace MyFinances.Controllers
             return response;
         }
 
+
+        /// <summary>
+        /// Add operation
+        /// </summary>
+        /// <param name="operationDto">OperationDto object</param>
+        /// <returns>DataResponse - int</returns>
         [HttpPost]
         public DataResponse<int> Add(OperationDto operationDto)
         {
@@ -76,6 +92,12 @@ namespace MyFinances.Controllers
             return response;
         }
 
+
+        /// <summary>
+        /// Update operation
+        /// </summary>
+        /// <param name="operation">OperationDto object</param>
+        /// <returns>Response</returns>
         [HttpPut]
         public Response Update(OperationDto operation)
         {
@@ -95,6 +117,12 @@ namespace MyFinances.Controllers
             return response;
         }
 
+
+        /// <summary>
+        /// Delete operation by Id
+        /// </summary>
+        /// <param name="id">Operation Id</param>
+        /// <returns>Response</returns>
         [HttpDelete("{id}")]
         public Response Delete(int id)
         {
