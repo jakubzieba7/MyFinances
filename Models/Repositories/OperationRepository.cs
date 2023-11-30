@@ -22,6 +22,11 @@ namespace MyFinances.Models.Repositories
             return _context.Operations.FirstOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<Operation> Get(int rowNo, int pageNo)
+        {
+            return _context.Operations.Skip(rowNo * pageNo);
+        }
+
         public void Add(Operation operation)
         {
             operation.Date = DateTime.Now;

@@ -65,6 +65,30 @@ namespace MyFinances.Controllers
             return response;
         }
 
+        /// <summary>
+        /// Get operations by rows and pages numbers
+        /// </summary>
+        /// <param name="rowNo">Rows number</param>
+        /// <param name="pageNo">Pages number</param>
+        /// <returns>DataResponse - OperationDto</returns>
+        [HttpGet("{rowNo,pageNo}")]
+        public DataResponse<IEnumerable<OperationDto>> Get(int rowNo,int pageNo)
+        {
+            var response = new DataResponse<IEnumerable<OperationDto>>();
+
+            try
+            {
+                response.Data = _unitOfWork.Operation.Get(rowNo, pageNo)?.ToDtos();
+            }
+            catch (Exception exception)
+            {
+                //logowanie do pliku
+                response.Errors.Add(new Error(exception.Source, exception.Message));
+            }
+
+            return response;
+        }
+
 
         /// <summary>
         /// Add operation
