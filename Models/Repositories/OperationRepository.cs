@@ -12,19 +12,18 @@ namespace MyFinances.Models.Repositories
             _context = context;
         }
 
-        public IEnumerable<Operation> Get()
-        {
-            return _context.Operations;
-        }
-
         public Operation Get(int id)
         {
             return _context.Operations.FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Operation> Get(int rowNo, int pageNo)
+        public IEnumerable<Operation> Get(PaginationFilter paginationFilter)
         {
-            return _context.Operations.Skip(rowNo * pageNo);
+            return _context.Operations
+                            .OrderBy(x => x.Name)
+                            .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
+                            .Take(paginationFilter.PageSize)
+                            .ToList();
         }
 
         public void Add(Operation operation)

@@ -19,28 +19,6 @@ namespace MyFinances.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        /// <summary>
-        /// Get all operations
-        /// </summary>
-        /// <returns>DataResponse - IEnumerable OperationDto</returns>
-        [HttpGet]
-        public DataResponse<IEnumerable<OperationDto>> Get()
-        {
-            var response = new DataResponse<IEnumerable<OperationDto>>();
-
-            try
-            {
-                response.Data = _unitOfWork.Operation.Get().ToDtos();
-            }
-            catch (Exception exception)
-            {
-                //logowanie do pliku
-                response.Errors.Add(new Error(exception.Source, exception.Message));
-            }
-
-            return response;
-        }
-
 
         /// <summary>
         /// Get operation by Id
@@ -66,19 +44,18 @@ namespace MyFinances.Controllers
         }
 
         /// <summary>
-        /// Get operations by rows and pages numbers
+        /// Get operations by Page number and Page size implemented in PaginationFilter
         /// </summary>
-        /// <param name="rowNo">Rows number</param>
-        /// <param name="pageNo">Pages number</param>
-        /// <returns>DataResponse - OperationDto</returns>
-        [HttpGet("{rowNo,pageNo}")]
-        public DataResponse<IEnumerable<OperationDto>> Get(int rowNo,int pageNo)
+        /// <param name="paginationFilter">Page size and Page number</param>
+        /// <returns></returns>
+        [HttpGet]
+        public DataResponse<IEnumerable<OperationDto>> Get([FromQuery] PaginationFilter paginationFilter)
         {
             var response = new DataResponse<IEnumerable<OperationDto>>();
 
             try
             {
-                response.Data = _unitOfWork.Operation.Get(rowNo, pageNo)?.ToDtos();
+                response.Data = _unitOfWork.Operation.Get(paginationFilter)?.ToDtos();
             }
             catch (Exception exception)
             {
