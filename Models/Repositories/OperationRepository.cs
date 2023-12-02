@@ -26,6 +26,11 @@ namespace MyFinances.Models.Repositories
                             .ToList();
         }
 
+        public int Count()
+        {
+            return _context.Operations.Count();
+        }
+
         public void Add(Operation operation)
         {
             operation.Date = DateTime.Now;

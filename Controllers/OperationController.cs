@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using MyFinances.Models;
 using MyFinances.Models.Converters;
 using MyFinances.Models.Domains;
 using MyFinances.Models.Dtos;
+using MyFinances.Models.Helpers;
 using MyFinances.Models.Response;
+using MyFinances.Models.Services;
 
 namespace MyFinances.Controllers
 {
@@ -13,10 +16,12 @@ namespace MyFinances.Controllers
     public class OperationController : ControllerBase
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly UriService _uriService;
 
-        public OperationController(UnitOfWork unitOfWork)
+        public OperationController(UnitOfWork unitOfWork, UriService uriService)
         {
             _unitOfWork = unitOfWork;
+            _uriService = uriService;
         }
 
 
@@ -49,13 +54,17 @@ namespace MyFinances.Controllers
         /// <param name="paginationFilter">Page size and Page number</param>
         /// <returns></returns>
         [HttpGet]
-        public DataResponse<IEnumerable<OperationDto>> Get([FromQuery] PaginationFilter paginationFilter)
+        public PagedResponse<IEnumerable<OperationDto>> Get([FromQuery] PaginationFilter paginationFilter)
         {
-            var response = new DataResponse<IEnumerable<OperationDto>>();
+            var totalRecords = _unitOfWork.Operation.Count();
+            var pagedData=_unitOfWork.Operation.Get(paginationFilter)?.ToDtos();
+            var route = Request.Path.Value;
+            var validFilter= new PaginationFilter(paginationFilter.PageNumber, paginationFilter.PageSize);
+            var response = new PagedResponse<IEnumerable<OperationDto>>();
 
             try
             {
-                response.Data = _unitOfWork.Operation.Get(paginationFilter)?.ToDtos();
+                PaginationHelper.CreatePagedReponse<OperationDto>(pagedData, validFilter, totalRecords, _uriService, route);
             }
             catch (Exception exception)
             {
@@ -63,7 +72,7 @@ namespace MyFinances.Controllers
                 response.Errors.Add(new Error(exception.Source, exception.Message));
             }
 
-            return response;
+            return PaginationHelper.CreatePagedReponse<OperationDto>(pagedData, validFilter, totalRecords, _uriService, route);
         }
 
 

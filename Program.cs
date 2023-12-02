@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyFinances.Models;
 using MyFinances.Models.Domains;
+using MyFinances.Models.Services;
 using System.Reflection;
 
 namespace MyFinances
@@ -29,8 +30,8 @@ namespace MyFinances
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "ToDo API",
-                    Description = "An ASP.NET Core Web API for managing ToDo items",
+                    Title = "Operations API",
+                    Description = "An ASP.NET Core Web API for managing operations",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -47,6 +48,16 @@ namespace MyFinances
                 // using System.Reflection;
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
+
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSingleton<UriService>(x =>
+            {
+                var accessor = x.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                
+                return new UriService(uri);
             });
 
             var app = builder.Build();
