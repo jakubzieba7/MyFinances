@@ -64,7 +64,7 @@ namespace MyFinances.Controllers
 
             try
             {
-                PaginationHelper.CreatePagedReponse<OperationDto>(pagedData, validFilter, totalRecords, _uriService, route);
+                response = PaginationHelper.CreatePagedReponse<OperationDto>(pagedData, validFilter, totalRecords, _uriService, route);
             }
             catch (Exception exception)
             {
@@ -72,7 +72,7 @@ namespace MyFinances.Controllers
                 response.Errors.Add(new Error(exception.Source, exception.Message));
             }
 
-            return PaginationHelper.CreatePagedReponse<OperationDto>(pagedData, validFilter, totalRecords, _uriService, route);
+            return response;
         }
 
 
