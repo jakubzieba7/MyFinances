@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyFinances.Core.Dtos;
+using MyFinances.Core.Response;
 using MyFinances.Models;
 using MyFinances.Models.Converters;
-using MyFinances.Models.Domains;
-using MyFinances.Models.Dtos;
 using MyFinances.Models.Helpers;
-using MyFinances.Models.Response;
 using MyFinances.Models.Services;
 
 namespace MyFinances.Controllers

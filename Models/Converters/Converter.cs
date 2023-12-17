@@ -1,5 +1,5 @@
-﻿using MyFinances.Models.Domains;
-using MyFinances.Models.Dtos;
+﻿using MyFinances.Core.Dtos;
+using MyFinances.Models.Domains;
 
 namespace MyFinances.Models.Converters
 {

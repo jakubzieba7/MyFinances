@@ -1,4 +1,4 @@
-﻿using MyFinances.Models.Response;
+﻿using MyFinances.Core.Response;
 using MyFinances.Models.Services;
 
 namespace MyFinances.Models.Helpers
