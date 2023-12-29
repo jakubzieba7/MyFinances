@@ -1,4 +1,5 @@
-﻿using MyFinances.Models.Domains;
+﻿using MyFinances.Core;
+using MyFinances.Models.Domains;
 
 namespace MyFinances.Models.Repositories
 {

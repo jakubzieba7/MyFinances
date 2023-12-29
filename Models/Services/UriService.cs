@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
+using MyFinances.Core;
 
 namespace MyFinances.Models.Services
 {
